@@ -1,0 +1,9 @@
+#include <QApplication>
+#include "main_form.hh"
+
+int main(int argc, char** argv) {
+    QApplication application{argc, argv};
+    MainWindow mainWindow{};
+    mainWindow.show();
+    return QApplication::exec();
+}
