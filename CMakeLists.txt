@@ -7,12 +7,16 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
+if(POLICY CMP0100)
+    cmake_policy(SET CMP0100 NEW)
+endif()
+
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
 set(SRC_DIR src)
 file(GLOB_RECURSE SRC_FILES ${SRC_DIR}/*.cc)
 
-add_executable(OMS ${SRC_FILES})
-target_include_directories(OMS PRIVATE ${SRC_DIR})
-target_link_libraries(OMS Qt5::Widgets)
+add_executable(calculator ${SRC_FILES})
+target_include_directories(calculator PRIVATE ${SRC_DIR})
+target_link_libraries(calculator Qt5::Widgets)
 
