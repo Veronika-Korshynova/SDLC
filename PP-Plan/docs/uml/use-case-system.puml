@@ -1,0 +1,36 @@
+@startuml
+
+actor "Пользователь" as User
+actor "Менеджер каталога" as Admin
+
+usecase "UC-01\nНастроить профиль" as UC01
+usecase "UC-02\nЗадать ограничения" as UC02
+usecase "UC-03\nСформировать меню" as UC03
+usecase "UC-04\nПросмотреть план\nи КБЖУ" as UC04
+UC01 -[hidden]down- UC02
+UC02 -[hidden]down- UC03
+UC03 -[hidden]down- UC04
+User -- UC01
+User -- UC02
+User -- UC03
+User -- UC04
+
+usecase "UC-05\nПосмотреть рецепт" as UC05
+usecase "UC-06\nЗаменить блюдо" as UC06
+usecase "UC-07\nПолучить список\nпокупок" as UC07
+usecase "UC-08\nСохранить план" as UC08
+usecase "UC-09\nОткрыть сохранённый\nплан" as UC09
+UC05 -[hidden]down- UC06
+UC06 -[hidden]down- UC07
+UC07 -[hidden]down- UC08
+UC08 -[hidden]down- UC09
+User -- UC05
+User -- UC06
+User -- UC07
+User -- UC08
+User -- UC09
+
+
+usecase "UC-10\nИзменить каталога рецептов" as UC10
+Admin -- UC10 
+@enduml

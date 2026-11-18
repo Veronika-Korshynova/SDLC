@@ -1,0 +1,47 @@
+@startuml
+autonumber
+actor "Пользователь" as User
+participant "Система «ПП-План»" as System
+database "Каталог рецептов" as Catalog
+
+User -> System : Запросить меню на 7 дней
+activate System
+System -> System : Получить сохранённые параметры питания
+System -> System : Проверить параметры
+System -> Catalog : Запросить рецепты с проверенным составом
+activate Catalog
+Catalog --> System : Рецепты, ингредиенты и КБЖУ
+deactivate Catalog
+System -> System : Исключить запрещённые ингредиенты и аллергены
+
+alt Можно сформировать меню
+    System -> System : Подобрать блюда на 7 дней
+    System -> System : Рассчитать КБЖУ и отклонения от целей
+    System --> User : Показать недельное меню и КБЖУ
+else Подбор невозможен
+    System --> User : Сообщить о конфликте ограничений
+end
+deactivate System
+
+opt Меню сформировано и пользователь хочет заменить блюдо
+    User -> System : Выбрать блюдо для замены
+    activate System
+    System -> Catalog : Запросить допустимые альтернативы
+    activate Catalog
+    Catalog --> System : Альтернативные рецепты
+    deactivate Catalog
+    System -> System : Проверить аллергены и ограничения
+
+    alt Безопасные альтернативы найдены
+        System --> User : Показать варианты замены
+        User -> System : Выбрать заменяющее блюдо
+        System -> System : Заменить только выбранное блюдо
+        System -> System : Пересчитать КБЖУ и список покупок
+        System --> User : Показать обновлённое меню и показатели
+    else Подходящих блюд нет
+        System --> User : Сообщить, что замена невозможна
+    end
+    deactivate System
+end
+
+@enduml

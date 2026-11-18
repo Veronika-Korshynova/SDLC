@@ -1,0 +1,15 @@
+@startuml
+[*] --> Ready
+state "Ожидание действий" as Ready
+state "Настройка профиля" as Profile
+state "Формирование меню" as Generating
+state "Работа с планом" as Plan
+
+Ready --> Profile : Открыть профиль
+Profile --> Ready : Сохранить настройки
+Ready --> Generating : Запросить меню
+Generating --> Plan : Меню сформировано
+Generating --> Ready : Подбор невозможен / ошибка
+Ready --> Plan : Открыть сохранённый план
+Plan --> Ready : Сохранить план / завершить просмотр
+@enduml
